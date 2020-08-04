@@ -1,7 +1,7 @@
 # Original credit: https://github.com/jpetazzo/dockvpn
 
-# Smallest base image
-FROM alpine:latest
+# latest alpine image at 03/08/2020
+FROM alpine:3.12.0
 
 LABEL maintainer="Kyle Manna <kyle@kylemanna.com>"
 
@@ -20,15 +20,16 @@ ENV EASYRSA_VARS_FILE $OPENVPN/vars
 # Prevents refused client connection because of an expired CRL
 ENV EASYRSA_CRL_DAYS 3650
 
-VOLUME ["/etc/openvpn"]
-
 # Internally uses port 1194/udp, remap using `docker run -p 443:1194/tcp`
 EXPOSE 1194/udp
 
 CMD ["ovpn_run"]
 
 ADD ./bin /usr/local/bin
-RUN chmod a+x /usr/local/bin/*
+RUN chmod a+x /usr/local/bin/* && \
+    touch $OPENVPN/vars
+
+VOLUME ["/etc/openvpn"]
 
 # Add support for OTP authentication using a PAM module
 ADD ./otp/openvpn /etc/pam.d/
