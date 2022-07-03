@@ -1,9 +1,7 @@
 # Original credit: https://github.com/jpetazzo/dockvpn
 
-# latest alpine image at 03/08/2020
-FROM alpine:3.12.0
-
-LABEL maintainer="Kyle Manna <kyle@kylemanna.com>"
+# latest alpine image at 2022.07.01
+FROM alpine:3.16.0
 
 # Testing: pamtester
 RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing/" >> /etc/apk/repositories && \
@@ -17,7 +15,7 @@ ENV EASYRSA=/usr/share/easy-rsa \
     EASYRSA_CRL_DAYS=3650 \
     EASYRSA_PKI=$OPENVPN/pki
 
-# Internally uses port 1194/udp, remap using `docker run -p 443:1194/tcp`
+# Internally uses port 1194/udp, remap e.g. by using `docker run -p 443:1194/tcp`
 EXPOSE 1194/udp
 
 CMD ["ovpn_run"]
