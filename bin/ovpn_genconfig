@@ -336,6 +336,11 @@ port 1194
 dev $OVPN_DEVICE$OVPN_DEVICEN
 status /tmp/openvpn-status.log
 
+status-version 2
+log-append /tmp/openvpn.log
+
+client-config-dir /etc/openvpn/ccd
+
 user nobody
 group nogroup
 EOF
